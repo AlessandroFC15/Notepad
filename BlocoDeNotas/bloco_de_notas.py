@@ -14,31 +14,92 @@ class BlocoDeNotas:
         
     def printAnotacoes(self):
         for anotacao in self.anotacoes.values():
-            print(anotacao)
-            print('')
+            print(anotacao, '\n')
             
-    def getAnotacao(self, indice):
-        if indice in self.anotacoes:
-            return self.anotacoes[indice]
-        else:
-            print ('Não existe anotação com o índice %s no bloco de notas.' % indice)
-            return None
+    def getAnotacaoPorIndice(self, indice):
+        return self.anotacoes[indice] if indice in self.anotacoes else None 
+    
+    def getAnotacaoPorID(self, id):
+        listaAnotacoesComID = [anotacao for anotacao in self.anotacoes.values() if anotacao.id == id]     
+        
+        return listaAnotacoesComID[0] if listaAnotacoesComID else None
+        
+    def getAnotacoesComPalavra(self, palavra):
+        return [anotacao for anotacao in self.anotacoes.values() if anotacao.contemPalavra(palavra)]        
             
     def inserirAnotacao(self, anotacao=None):
         if not anotacao:
             anotacao = Anotacoes(404, 'To be implemented')
         
-        if not (anotacao.indice in self.anotacoes):
-            self.anotacoes[anotacao.indice] = anotacao
+        # Caso não existe uma anotação com o mesmo índice
+        if not anotacao.indice in self.anotacoes:
+            # Caso não exista uma anotação com o mesmo ID
+            if not self.existeAnotacaoComID(anotacao.id):
+                self.anotacoes[anotacao.indice] = anotacao
+                print('Adição de anotação realizada com sucesso!')
+            else:
+                print('Já existe uma anotação cadastrada com este ID.')
         else:
-            print('Já existe uma anotação cadastrada com este índice')
+            print('Já existe uma anotação cadastrada com este índice.')
             
-    def excluirAnotacao(self, indice):
+    def excluirAnotacaoComID(self, id):
+        anotacaoAExcluir = self.getAnotacaoPorID(id)
+        
+        if anotacaoAExcluir:
+            del self.anotacoes[anotacaoAExcluir.indice]
+        else:
+            print ('Não existe anotação com o ID %s no bloco de notas.' % id)
+            
+    def excluirAnotacaoComIndice(self, indice):
         if indice in self.anotacoes:
             del self.anotacoes[indice]
         else:
             print ('Não existe anotação com o índice %s no bloco de notas.' % indice)
-    
+            
+    def alterarConteudoAnotacao(self, anotacao, novoConteudo):
+        if self.existeAnotacao(anotacao):
+            anotacao.alterarConteudo(novoConteudo) 
+            print('Alteração realizada com sucesso!')
+        else:
+            print ('A anotação fornecida não existe no bloco de notas.')
+            
+    def alterarConteudoAnotacaoPorIndice(self, indice, novoConteudo):
+        anotacao = self.getAnotacaoPorIndice(indice)
+        
+        if anotacao:
+            anotacao.alterarConteudo(novoConteudo) 
+            print('Alteração realizada com sucesso!')
+        else:
+            print ('Não existe anotação com o índice %s no bloco de notas.' % indice)
+            
+    def alterarConteudoAnotacaoPorID(self, id, novoConteudo):
+        anotacao = self.getAnotacaoPorID(id)
+        
+        if anotacao:
+            anotacao.alterarConteudo(novoConteudo) 
+            print('Alteração realizada com sucesso!')
+        else:
+            print ('Não existe anotação com o ID %s no bloco de notas.' % id)
+            
+    def alterarIndiceAnotacao(self, indiceAntigo, novoIndice):
+        if indiceAntigo in self.anotacoes:
+            if not novoIndice in self.anotacoes:
+                anotacao = self.anotacoes[indiceAntigo]    
+                anotacao.alterarIndice(novoIndice)
+            
+                del self.anotacoes[indiceAntigo]        
+                self.anotacoes[anotacao.indice] = anotacao
+            else:
+                print('Já existe uma anotação com o novo índice fornecido')
+        else:
+            print('A anotação fornecida não existe no bloco de notas.')
+            
+    def existeAnotacaoComID(self, id):
+        return id in [anotacao.id for anotacao in self.anotacoes.values()]
+        
+    def existeAnotacao(self, anotacao):
+        return anotacao.indice in self.anotacoes
+            
     def getPalavrasMaisFrequentes(self):
         words = {}        
         
