@@ -42,19 +42,11 @@ class BlocoDeNotas:
         else:
             print('Já existe uma anotação cadastrada com este índice.')
             
-    def excluirAnotacaoComID(self, id):
-        anotacaoAExcluir = self.getAnotacaoPorID(id)
-        
-        if anotacaoAExcluir:
+    def excluirAnotacao(self, anotacaoAExcluir):
+        if self.excluirAnotacao(anotacaoAExcluir):
             del self.anotacoes[anotacaoAExcluir.indice]
         else:
-            print ('Não existe anotação com o ID %s no bloco de notas.' % id)
-            
-    def excluirAnotacaoComIndice(self, indice):
-        if indice in self.anotacoes:
-            del self.anotacoes[indice]
-        else:
-            print ('Não existe anotação com o índice %s no bloco de notas.' % indice)
+            print ('Não existe anotação com o índice %s, id %s no bloco de notas.' % anotacaoAExcluir.indice, anotacaoAExcluir.id)
             
     def alterarConteudoAnotacao(self, anotacao, novoConteudo):
         if self.existeAnotacao(anotacao):
@@ -62,24 +54,6 @@ class BlocoDeNotas:
             print('Alteração realizada com sucesso!')
         else:
             print ('A anotação fornecida não existe no bloco de notas.')
-            
-    def alterarConteudoAnotacaoPorIndice(self, indice, novoConteudo):
-        anotacao = self.getAnotacaoPorIndice(indice)
-        
-        if anotacao:
-            anotacao.alterarConteudo(novoConteudo) 
-            print('Alteração realizada com sucesso!')
-        else:
-            print ('Não existe anotação com o índice %s no bloco de notas.' % indice)
-            
-    def alterarConteudoAnotacaoPorID(self, id, novoConteudo):
-        anotacao = self.getAnotacaoPorID(id)
-        
-        if anotacao:
-            anotacao.alterarConteudo(novoConteudo) 
-            print('Alteração realizada com sucesso!')
-        else:
-            print ('Não existe anotação com o ID %s no bloco de notas.' % id)
             
     def alterarIndiceAnotacao(self, indiceAntigo, novoIndice):
         if indiceAntigo in self.anotacoes:
