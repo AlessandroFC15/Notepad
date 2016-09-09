@@ -20,11 +20,12 @@ print('.: BLOCO DE NOTAS :.')
 
 while True:
     print('\n1 - Inserir Anotação') 
-    print('2 - Alterar conteúdo da anotação fornecendo índice')
+    print('2 - Alterar conteúdo da anotação')
     print('3 - Buscar Anotação ')
+    print('4 - Buscar Anotação por palavra')
     print('X - Sair')
     
-    opcao = input('>> Insira sua opcao: ').lower()
+    opcao = input('>> Insira sua opcao: ')
     
     if opcao == '1':
         novaAnotacao = criarNovaAnotacao()
@@ -32,16 +33,30 @@ while True:
         if novaAnotacao:
             notepad.inserirAnotacao(novaAnotacao)
     elif opcao == '2':
-        indice = input('>> Insira o indice da anotacao: ')
-        
-        anotacao = notepad.getAnotacaoPorIndice(indice)
-        
+        anotacao = None
+
+        while True:
+            alterar_conteudo_opcao = input('>> Buscar anotação pro índice (I) ou ID (ID) | X para voltar: ').lower()
+
+            if alterar_conteudo_opcao == 'i':
+                anotacao_indice = input('>> Insira o índice: ')
+
+                anotacao = notepad.getAnotacaoPorIndice(anotacao_indice)
+                break
+            elif alterar_conteudo_opcao == 'id':
+                anotacao_id = input('>> Insira o ID: ')
+
+                anotacao = notepad.getAnotacaoPorID(int(anotacao_id))
+                break
+            else:
+                print('# Insira uma opção válida #')
+
         if anotacao:
             novoConteudo = input('>> Insira o novo conteúdo: ')
-            
+
             notepad.alterarConteudoAnotacao(anotacao, novoConteudo)
         else:
-            print ('Não existe anotação com o índice %s no bloco de notas.' % indice)
+            print('Não existe nenhuma anotação no bloco de notas com o dado informado. Tente novamente')
         
     elif opcao == '3':
         indiceAnotacao = input('>> Insira o indice da anotacao: ')
@@ -52,7 +67,20 @@ while True:
             print(anotacao)
         else:
             print ('Não existe anotação com o índice %s no bloco de notas.' % indiceAnotacao)
-        
-    if opcao == 'x':
+
+    elif opcao == '4':
+        print()
+        palavra = input('>> Insira uma palavra: ')
+
+        anotacoes = notepad.getAnotacoesComPalavra(palavra)
+
+        if anotacoes:
+            print("\n.: Anotacoes Encontradas com a palavra '%s'\n" % palavra)
+            for anotacao in anotacoes:
+                print(anotacao, '\n')
+        else:
+            print('# Nenhuma anotacao no bloco de notas contem a palavra %s' % palavra)
+
+    elif opcao.lower() == 'x':
         print('# Programa finalizado #')
         break
