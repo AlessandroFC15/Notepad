@@ -2,9 +2,9 @@
 import datetime
 
 class Anotacoes:
-    def __init__(self, id, indice, conteudo):
-        self.id = id   
-        self.indice = indice
+    def __init__(self, titulo, conteudo):
+        self.id = id(self)   
+        self.titulo = titulo
         self.conteudo = conteudo
         self.dataCriacao = datetime.date.today()
         
@@ -17,8 +17,8 @@ class Anotacoes:
     def alterarConteudo(self, novoConteudo):
         self.conteudo = novoConteudo
         
-    def alterarIndice(self, novoIndice):
-        self.indice = novoIndice
+    def alterarTitulo(self, novoTitulo):
+        self.titulo = novoTitulo
         
     def __str__(self):
-        return "Índice: %s\nConteúdo: %s\nData de Criação: %s" % (self.indice, self.conteudo, self.dataCriacao)
+        return "ID: %s \nTítulo: %s\nConteúdo: %s\nData de Criação: %s" % (self.id, self.titulo, self.conteudo, self.dataCriacao)

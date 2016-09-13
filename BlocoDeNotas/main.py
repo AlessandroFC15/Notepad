@@ -56,7 +56,7 @@ while True:
 
             notepad.alterarConteudoAnotacao(anotacao, novoConteudo)
         else:
-            print('Não existe nenhuma anotação no bloco de notas com o dado informado. Tente novamente')
+            print('# Não existe nenhuma anotação no bloco de notas com o dado informado. Tente novamente #')
         
     elif opcao == '3':
         indiceAnotacao = input('>> Insira o indice da anotacao: ')
@@ -66,7 +66,7 @@ while True:
         if anotacao:
             print(anotacao)
         else:
-            print ('Não existe anotação com o índice %s no bloco de notas.' % indiceAnotacao)
+            print ('# Não existe anotação com o índice %s no bloco de notas. #' % indiceAnotacao)
 
     elif opcao == '4':
         print()
