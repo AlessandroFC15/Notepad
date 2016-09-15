@@ -8,16 +8,16 @@ class Anotacoes:
         self.conteudo = conteudo
         self.dataCriacao = datetime.date.today()
         
-    def getDataCriacao(self):
+    def get_data_criacao(self):
         return self.dataCriacao
         
-    def contemPalavra(self, palavra):
+    def contem_palavra(self, palavra):
         return self.conteudo.find(palavra) != -1
         
-    def alterarConteudo(self, novoConteudo):
+    def altera_conteudo(self, novoConteudo):
         self.conteudo = novoConteudo
         
-    def alterarTitulo(self, novoTitulo):
+    def alterar_titulo(self, novoTitulo):
         self.titulo = novoTitulo
         
     def __str__(self):
